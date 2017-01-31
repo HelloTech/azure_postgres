@@ -154,7 +154,6 @@
                 ]
             },
             "dependsOn": [
-                "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
         },
@@ -267,7 +266,6 @@
                 ]
             },
             "dependsOn": [
-                "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
         },
