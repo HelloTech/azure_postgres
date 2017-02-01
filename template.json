@@ -34,7 +34,8 @@
         "lbName": "postgresLoadBalancer",
         "lbId": "[resourceId('Microsoft.Network/loadBalancers/', variables('lbName'))]",
         "vnetName": "dcos-vnet-F0547AD4",
-        "vnetId": "['testht', resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
+        "vnetGroup": "testht",
+        "vnetId": "[resourceId(variables('vnetGroup'), 'Microsoft.Network/virtualNetworks', variables('vnetName'))]",
         "zookeeperNetName": "dcos-agentPublicSubnet",
         "zookeeperInstanceCount": 3,
         "postgresNetName": "dcos-agentPublicSubnet",
@@ -334,7 +335,7 @@
                             "privateIPAddress": "10.0.101.4",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[parameters('loadBalancers_postgresLoadBalancer_id')]"
+                                "id": "[concat(variables('vnetId'), '/subnets/', variables('zookeeperNetName'))]"
                             }
                         }
                     }
