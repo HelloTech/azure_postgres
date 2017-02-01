@@ -492,7 +492,7 @@
     "outputs": {
         "fqdn": {
             "type": "String",
-            "value": "[reference(variables('ipName')).dnsSettings.fqdn]"
+            "value": "10.0.101.4"
         },
         "port": {
             "type": "Int",
