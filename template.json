@@ -178,7 +178,7 @@
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
-                "typeHandlerVersion": "2.0",
+                "typeHandlerVersion": "1.2",
                 "settings": {
                     "fileUris": [
                         "https://raw.githubusercontent.com/HelloTech/azure_patroni/master/zookeeper_startup.sh"
@@ -306,7 +306,7 @@
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
-                "typeHandlerVersion": "2.0",
+                "typeHandlerVersion": "1.2",
                 "settings": {
                     "fileUris": [
                         "https://raw.githubusercontent.com/HelloTech/azure_patroni/master/autopart.sh",
