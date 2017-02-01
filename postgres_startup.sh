@@ -21,18 +21,18 @@ echo "" >> /usr/local/startup.log
 
 # format and partition data disk(s)
 # will be mounted at "/media/data(n)"
-#sudo chmod +x ./autopart.sh >> /usr/local/startup.log
-#sudo ./autopart.sh >> /usr/local/startup.log
-#sudo mkdir /media/data1/data
-#sudo chmod 777 /media/data1/data
+sudo chmod +x ./autopart.sh >> /usr/local/startup.log
+sudo ./autopart.sh >> /usr/local/startup.log
+sudo mkdir /media/data1/data
+sudo chmod 777 /media/data1/data
 
 # create RAID
-sudo apt-get --assume-yes -qq install mdadm
-sudo apt-get --assume-yes -qq install xfsprogs
-sudo chmod +x ./ebs_raid0.sh >> /usr/local/startup.log
-sudo ./ebs_raid0.sh /mnt/database >> /usr/local/startup.log
-sudo mkdir /mnt/database/data
-sudo chmod 777 /mnt/database/data
+#sudo apt-get --assume-yes -qq install mdadm
+#sudo apt-get --assume-yes -qq install xfsprogs
+#sudo chmod +x ./ebs_raid0.sh >> /usr/local/startup.log
+#sudo ./ebs_raid0.sh /mnt/database >> /usr/local/startup.log
+#sudo mkdir /mnt/database/data
+#sudo chmod 777 /mnt/database/data
 
 # update package lists for PostgreSQL 9.6
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
@@ -160,7 +160,7 @@ if [ $myIndex -ne 0 ]
 fi
 echo "  listen: '*:5433'" >> $patroniCfg
 echo "  connect_address: 10.0.101.$(($myIndex + 10)):5433" >> $patroniCfg
-echo "  data_dir: /mnt/database/data/postgresql" >> $patroniCfg
+echo "  data_dir: /media/data1/data/postgresql" >> $patroniCfg
 echo "  pgpass: /tmp/pgpass" >> $patroniCfg
 if [ $myIndex -ne 0 ]
   then
