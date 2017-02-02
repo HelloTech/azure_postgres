@@ -129,12 +129,6 @@
                     },
                     "postgresNetName": {
                         "value": "[parameters('postgresNetName')]"
-                    },
-                    "clusterName": {
-                        "value": "[parameters('clusterName')]"
-                    },
-                    "vnetId": {
-                        "value": "[variables('vnetId')]"
                     }
                 }
             }
@@ -204,7 +198,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
-                "[variables('lbId')]"
+                "[resourceId('Microsoft.Resources/deployments', 'lb-temp')]"
             ]
         },
         {
@@ -318,7 +312,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
-                "[variables('lbId')]"
+                "[resourceId('Microsoft.Resources/deployments', 'lb-temp')]"
             ]
         },
         {

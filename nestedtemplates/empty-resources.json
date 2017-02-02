@@ -13,10 +13,6 @@
         "postgresNetName": {
             "type": "String",
             "defaultValue": ""
-        },
-        "clusterName": {
-            "type": "String",
-            "defaultValue": ""
         }
     },
     "variables": {},
