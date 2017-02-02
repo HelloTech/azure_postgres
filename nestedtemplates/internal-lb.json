@@ -23,7 +23,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/loadBalancers",
-            "name": "[variables('lbName')]",
+            "name": "[parameters('lbName')]",
             "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
             "properties": {
