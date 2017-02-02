@@ -17,6 +17,10 @@
         "vnetId": {
             "type": "String",
             "defaultValue": ""
+        },
+        "zookeeperNetName": {
+            "defaultValue": "",
+            "type": "String"
         }
     },
     "variables": {},

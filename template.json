@@ -426,6 +426,9 @@
                     },
                     "lbId": {
                         "value": "[variables('lbId')]"
+                    },
+                    "zookeeperNetName": {
+                        "value": "[parameters('zookeeperNetName')]"
                     }
                 }
             },
