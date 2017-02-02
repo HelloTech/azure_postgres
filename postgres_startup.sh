@@ -120,32 +120,32 @@ echo "" >> $patroniCfg
 if [ $myIndex -eq 0 ]
   then
     echo "bootstrap:" >> $patroniCfg
-	echo "  dcs:"  >> $patroniCfg
-	echo "    ttl: *ttl" >> $patroniCfg
-	echo "    loop_wait: *loop_wait" >> $patroniCfg
-	echo "    retry_timeout: *loop_wait" >> $patroniCfg
-	echo "    maximum_lag_on_failover: 1048576" >> $patroniCfg
-	echo "    postgresql:" >> $patroniCfg
-	echo "      use_pg_rewind: true" >> $patroniCfg
-	echo "      use_slots: true" >> $patroniCfg
-	echo "      parameters:" >> $patroniCfg
-	echo "        archive_mode: \"on\"" >> $patroniCfg
-	echo "        archive_timeout: 1800s" >> $patroniCfg
-	echo "        archive_command: mkdir -p ../wal_archive && test ! -f ../wal_archive/%f && cp %p ../wal_archive/%f" >> $patroniCfg
-	echo "      recovery_conf:" >> $patroniCfg
-	echo "        restore_command: cp ../wal_archive/%f %p" >> $patroniCfg
-	echo "  initdb:" >> $patroniCfg
-	echo "  - encoding: UTF8" >> $patroniCfg
-	echo "  - data-checksums" >> $patroniCfg
-	echo "  pg_hba:" >> $patroniCfg
-	echo "  - host replication all 0.0.0.0/0 md5" >> $patroniCfg
-	echo "  - host all all 0.0.0.0/0 md5" >> $patroniCfg
-	echo "  users:" >> $patroniCfg
-	echo "    admin:" >> $patroniCfg
-	echo "      password: \"$adminPassword\"" >> $patroniCfg
-	echo "      options:" >> $patroniCfg
-	echo "        - createrole" >> $patroniCfg
-	echo "        - createdb" >> $patroniCfg
+    echo "  dcs:"  >> $patroniCfg
+    echo "    ttl: *ttl" >> $patroniCfg
+    echo "    loop_wait: *loop_wait" >> $patroniCfg
+    echo "    retry_timeout: *loop_wait" >> $patroniCfg
+    echo "    maximum_lag_on_failover: 1048576" >> $patroniCfg
+    echo "    postgresql:" >> $patroniCfg
+    echo "      use_pg_rewind: true" >> $patroniCfg
+    echo "      use_slots: true" >> $patroniCfg
+    echo "      parameters:" >> $patroniCfg
+    echo "        archive_mode: \"on\"" >> $patroniCfg
+    echo "        archive_timeout: 1800s" >> $patroniCfg
+    echo "        archive_command: mkdir -p ../wal_archive && test ! -f ../wal_archive/%f && cp %p ../wal_archive/%f" >> $patroniCfg
+    echo "      recovery_conf:" >> $patroniCfg
+    echo "        restore_command: cp ../wal_archive/%f %p" >> $patroniCfg
+    echo "  initdb:" >> $patroniCfg
+    echo "  - encoding: UTF8" >> $patroniCfg
+    echo "  - data-checksums" >> $patroniCfg
+    echo "  pg_hba:" >> $patroniCfg
+    echo "  - host replication all 0.0.0.0/0 md5" >> $patroniCfg
+    echo "  - host all all 0.0.0.0/0 md5" >> $patroniCfg
+    echo "  users:" >> $patroniCfg
+    echo "    admin:" >> $patroniCfg
+    echo "      password: \"$adminPassword\"" >> $patroniCfg
+    echo "      options:" >> $patroniCfg
+    echo "        - createrole" >> $patroniCfg
+    echo "        - createdb" >> $patroniCfg
 fi
 echo "" >> $patroniCfg
 echo "tags:" >> $patroniCfg
@@ -165,53 +165,53 @@ echo "  pgpass: /tmp/pgpass" >> $patroniCfg
 if [ $myIndex -ne 0 ]
   then
     echo "  maximum_lag_on_failover: 1048576" >> $patroniCfg
-	echo "  use_slots: true" >> $patroniCfg
-	echo "  initdb:" >> $patroniCfg
-	echo "    - encoding: UTF8" >> $patroniCfg
-	echo "    - data-checksums" >> $patroniCfg
-	echo "  pg_rewind:" >> $patroniCfg
-	echo "    username: postgres" >> $patroniCfg
-	echo "    password: \"$adminPassword\"" >> $patroniCfg
-	echo "  pg_hba:" >> $patroniCfg
-	echo "    - host replication all 0.0.0.0/0 md5" >> $patroniCfg
-	echo "    - host all all 0.0.0.0/0 md5" >> $patroniCfg
-	echo "  replication:" >> $patroniCfg
-	echo "    username: replicator" >> $patroniCfg
-	echo "    password: \"$adminPassword\"" >> $patroniCfg
-	echo "  superuser:" >> $patroniCfg
-	echo "    username: postgres" >> $patroniCfg
-	echo "    password: \"$adminPassword\"" >> $patroniCfg
-	echo "  admin:" >> $patroniCfg
-	echo "    username: admin" >> $patroniCfg
-	echo "    password: \"$adminPassword\"" >> $patroniCfg
-	echo "  create_replica_method:" >> $patroniCfg
-	echo "    - basebackup" >> $patroniCfg
-	echo "  recovery_conf:" >> $patroniCfg
-	echo "    restore_command: cp ../wal_archive/%f %p" >> $patroniCfg
-	echo "  parameters:" >> $patroniCfg
-	echo "    archive_mode: \"on\"" >> $patroniCfg
-	echo "    wal_level: hot_standby" >> $patroniCfg
-	echo "    archive_command: mkdir -r ../wal_archive && test ! -f ../wal_archive/%f && cp %cp ../wal_archive/%f" >> $patroniCfg
-	echo "    max_wal_senders: 10" >> $patroniCfg
-	echo "    wal_keep_segments: 8" >> $patroniCfg
-	echo "    archive_timeout: 1800s" >> $patroniCfg
-	echo "    max_replication_slots: 10" >> $patroniCfg
-	echo "    hot_standby: \"on\"" >> $patroniCfg
-	echo "    wal_log_hints: \"on\"" >> $patroniCfg
-	echo "    unix_socket_directories: '.'" >> $patroniCfg
+    echo "  use_slots: true" >> $patroniCfg
+    echo "  initdb:" >> $patroniCfg
+    echo "    - encoding: UTF8" >> $patroniCfg
+    echo "    - data-checksums" >> $patroniCfg
+    echo "  pg_rewind:" >> $patroniCfg
+    echo "    username: postgres" >> $patroniCfg
+    echo "    password: \"$adminPassword\"" >> $patroniCfg
+    echo "  pg_hba:" >> $patroniCfg
+    echo "    - host replication all 0.0.0.0/0 md5" >> $patroniCfg
+    echo "    - host all all 0.0.0.0/0 md5" >> $patroniCfg
+    echo "  replication:" >> $patroniCfg
+    echo "    username: replicator" >> $patroniCfg
+    echo "    password: \"$adminPassword\"" >> $patroniCfg
+    echo "  superuser:" >> $patroniCfg
+    echo "    username: postgres" >> $patroniCfg
+    echo "    password: \"$adminPassword\"" >> $patroniCfg
+    echo "  admin:" >> $patroniCfg
+    echo "    username: admin" >> $patroniCfg
+    echo "    password: \"$adminPassword\"" >> $patroniCfg
+    echo "  create_replica_method:" >> $patroniCfg
+    echo "    - basebackup" >> $patroniCfg
+    echo "  recovery_conf:" >> $patroniCfg
+    echo "    restore_command: cp ../wal_archive/%f %p" >> $patroniCfg
+    echo "  parameters:" >> $patroniCfg
+    echo "    archive_mode: \"on\"" >> $patroniCfg
+    echo "    wal_level: hot_standby" >> $patroniCfg
+    echo "    archive_command: mkdir -r ../wal_archive && test ! -f ../wal_archive/%f && cp %cp ../wal_archive/%f" >> $patroniCfg
+    echo "    max_wal_senders: 10" >> $patroniCfg
+    echo "    wal_keep_segments: 8" >> $patroniCfg
+    echo "    archive_timeout: 1800s" >> $patroniCfg
+    echo "    max_replication_slots: 10" >> $patroniCfg
+    echo "    hot_standby: \"on\"" >> $patroniCfg
+    echo "    wal_log_hints: \"on\"" >> $patroniCfg
+    echo "    unix_socket_directories: '.'" >> $patroniCfg
   else
     echo "  authentication:" >> $patroniCfg
-	echo "    replication:" >> $patroniCfg
-	echo "      username: replicator" >> $patroniCfg
-	echo "      password: \"$adminPassword\"" >> $patroniCfg
-	echo "    superuser:" >> $patroniCfg
-	echo "      username: postgres" >> $patroniCfg
-	echo "      password: \"$adminPassword\"" >> $patroniCfg
-	echo "  parameters:" >> $patroniCfg
-	echo "    unix_socket_directories: '.'" >> $patroniCfg
+    echo "    replication:" >> $patroniCfg
+    echo "      username: replicator" >> $patroniCfg
+    echo "      password: \"$adminPassword\"" >> $patroniCfg
+    echo "    superuser:" >> $patroniCfg
+    echo "      username: postgres" >> $patroniCfg
+    echo "      password: \"$adminPassword\"" >> $patroniCfg
+    echo "  parameters:" >> $patroniCfg
+    echo "    unix_socket_directories: '.'" >> $patroniCfg
 fi
-  
-	
+
+
 # install HA PROXY
 sudo apt-get --assume-yes install haproxy
 # write configuration
