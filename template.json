@@ -112,7 +112,7 @@
     "resources": [
         {
             "type": "Microsoft.Resources/deployments",
-            "name": "[parameters('vnetName')]",
+            "name": "vnet",
             "apiVersion": "2015-01-01",
             "properties": {
                 "mode": "Incremental",
@@ -203,6 +203,7 @@
                 ]
             },
             "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
                 "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
@@ -255,6 +256,7 @@
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountPrefix')[copyIndex()], variables('storageAccountSuffix'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', 'zookeeper', copyIndex(), '-nic')]",
+                "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
                 "[concat('Microsoft.Compute/availabilitySets/', 'zookeeperAvailabilitySet')]"
             ]
         },
@@ -316,6 +318,7 @@
                 ]
             },
             "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
                 "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
@@ -433,7 +436,10 @@
                         "value": "[variables('lbId')]"
                     }
                 }
-            }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'vnet')]"
+            ]
         }
     ],
     "outputs": {
