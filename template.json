@@ -271,7 +271,7 @@
                 "typeHandlerVersion": "1.2",
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/HelloTech/azure_patroni/master/zookeeper_startup.sh"
+                        "concat(variables('sharedTemplateFileName'), '/zookeeper_startup.sh'"
                     ],
                     "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]"
                 }
@@ -399,8 +399,8 @@
                 "typeHandlerVersion": "1.2",
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/HelloTech/azure_patroni/master/autopart.sh",
-                        "https://raw.githubusercontent.com/HelloTech/azure_patroni/master/postgres_startup.sh"
+                        "concat(variables('sharedTemplateFileName'), '/autopart.sh'",
+                        "concat(variables('sharedTemplateFileName'), '/postgres_startup.sh'"
                     ],
                     "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]"
                 }
