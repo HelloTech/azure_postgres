@@ -354,7 +354,7 @@
                     "dataDisks": [
                         {
                             "name": "data0",
-                            "diskSizeGB": "128",
+                            "diskSizeGB": "256",
                             "lun": 0,
                             "vhd": {
                                 "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountPrefix')[copyIndex()], 'd', variables('storageAccountSuffix')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).primaryEndpoints.blob, 'vhds/', 'data0', copyIndex(), '.vhd')]"
