@@ -114,6 +114,7 @@
         {
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[parameters('vnetName')]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "2015-06-15",
             "properties": {
                 "mode": "Incremental",
@@ -132,7 +133,7 @@
                         "value": "[parameters('postgresNetName')]"
                     },
                     "clusterName": {
-                        "value": "[variables('clusterName')]"
+                        "value": "[parameters('clusterName')]"
                     }
                 }
             }
@@ -201,6 +202,7 @@
                 ]
             },
             "dependsOn": [
+                "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
         },
@@ -313,6 +315,7 @@
                 ]
             },
             "dependsOn": [
+                "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
         },
@@ -411,6 +414,7 @@
         {
             "type": "Microsoft.Network/loadBalancers",
             "name": "[variables('lbName')]",
+            "location": "[resourceGroup().location]",
             "apiVersion": "2015-06-15",
             "properties": {
                 "mode": "Incremental",
