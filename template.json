@@ -5,6 +5,63 @@
         "clusterName": {
             "type": "String"
         },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/HelloTech/azure_patroni/master",
+            "metadata": {
+                "description": "Change this value to your repo name if deploying from a fork"
+            }
+        },
+        "vnetGroup": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "VNET Resource Group."
+            }
+        },
+        "newVnet": {
+            "type": "string",
+            "defaultValue": "yes",
+            "allowedValues": [
+                "yes",
+                "no"
+            ],
+            "metadata": {
+                "description": "Would you like to create a new vnet?"
+            }
+        },
+        "lbType": {
+            "type": "string",
+            "defaultValue": "yes",
+            "allowedValues": [
+                "yes",
+                "no"
+            ],
+            "metadata": {
+                "description": "Would you like to create an internal or external load balancer?"
+            }
+        },
+        "vnetName": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the vnet you would like to create, or that you would like to deploy this into."
+            }
+        },
+        "zookeeperNetName": {
+            "defaultValue": "dcos-agentPublicSubnet",
+            "type": "String",
+            "metadata": {
+                "description": "Name you would like to give to zookeeper's subnet."
+            }
+        },
+        "postgresNetName": {
+            "defaultValue": "dcos-agentPublicSubnet",
+            "type": "String",
+            "metadata": {
+                "description": "Name you would like to give to postgres' subnet."
+            }
+        },
         "instanceCount": {
             "defaultValue": 2,
             "minValue": 2,
@@ -30,15 +87,18 @@
             "s",
             "y"
         ],
+        "nestedTemplates": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/']",
         "storageAccountType": "Standard_LRS",
         "lbName": "postgresLoadBalancer",
+        "vnetFile": {
+            "yes": "network-resources.json",
+            "no": "empty-resources.json"
+        },
         "lbId": "[resourceId('Microsoft.Network/loadBalancers/', variables('lbName'))]",
         "vnetName": "dcos-vnet-F0547AD4",
         "vnetGroup": "testht",
-        "vnetId": "[resourceId(variables('vnetGroup'), 'Microsoft.Network/virtualNetworks', variables('vnetName'))]",
-        "zookeeperNetName": "dcos-agentPublicSubnet",
+        "vnetId": "[resourceId(parameters('vnetGroup'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
         "zookeeperInstanceCount": 3,
-        "postgresNetName": "dcos-agentPublicSubnet",
         "postgresInstanceCount": "[parameters('instanceCount')]",
         "osType": {
             "publisher": "Canonical",
@@ -48,6 +108,32 @@
         }
     },
     "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('vnetName')]",
+            "apiVersion": "2015-06-15",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('sharedTemplateFileName'), variables('vnetFile')[parameters('newVnet')])]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetName": {
+                        "value": "[variables('vnetName')]"
+                    },
+                    "zookeeperNetName": {
+                        "value": "[parameters('zookeeperNetName')]"
+                    },
+                    "postgresNetName": {
+                        "value": "[parameters('postgresNetName')]"
+                    },
+                    "clusterName": {
+                        "value": "[variables('clusterName')]"
+                    }
+                }
+            }
+        },
         {
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[concat(variables('storageAccountPrefix')[copyIndex()], variables('storageAccountSuffix'))]",
@@ -105,7 +191,7 @@
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat('10.0.100.', copyIndex(10))]",
                             "subnet": {
-                                "id": "[concat(variables('vnetId'), '/subnets/', variables('zookeeperNetName'))]"
+                                "id": "[concat(variables('vnetId'), '/subnets/', parameters('zookeeperNetName'))]"
                             }
                         }
                     }
@@ -207,7 +293,7 @@
                             "privateIPAllocationMethod": "Static",
                             "privateIPAddress": "[concat('10.0.101.', copyIndex(10))]",
                             "subnet": {
-                                "id": "[concat(variables('vnetId'), '/subnets/', variables('postgresNetName'))]"
+                                "id": "[concat(variables('vnetId'), '/subnets/', parameters('postgresNetName'))]"
                             },
                             "loadBalancerBackendAddressPools": [
                                 {
@@ -335,7 +421,7 @@
                             "privateIPAddress": "10.0.101.4",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[concat(variables('vnetId'), '/subnets/', variables('zookeeperNetName'))]"
+                                "id": "[concat(variables('vnetId'), '/subnets/', parameters('zookeeperNetName'))]"
                             }
                         }
                     }

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetName": {
+      "type": "String",
+      "defaultValue": ""
+    },
+    "zookeeperNetName": {
+      "type": "String",
+      "defaultValue": ""
+    },
+    "postgresNetName": {
+      "type": "String",
+      "defaultValue": ""
+    },
+    "clusterName": {
+      "type": "String",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "vnetName": "[concat(parameters('clusterName'), '-net')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('vnetName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "tags": {},
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('zookeeperNetName')]",
+            "properties": {
+              "addressPrefix": "10.0.100.0/24"
+            }
+          },
+          {
+            "name": "[parameters('postgresNetName')]",
+            "properties": {
+              "addressPrefix": "10.0.101.0/24"
+            }
+          }
+        ]
+      },
+      "dependsOn": []
+    }
+  ]
+}
