@@ -87,7 +87,7 @@
             "s",
             "y"
         ],
-        "nestedTemplates": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/']",
+        "nestedTemplates": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/')]",
         "storageAccountType": "Standard_LRS",
         "lbName": "postgresLoadBalancer",
         "vnetFile": {
@@ -99,7 +99,6 @@
             "no": "internal-lb.json"
         },
         "lbId": "[resourceId('Microsoft.Network/loadBalancers/', variables('lbName'))]",
-        "vnetName": "dcos-vnet-F0547AD4",
         "vnetGroup": "testht",
         "vnetId": "[resourceId(parameters('vnetGroup'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
         "zookeeperInstanceCount": 3,
@@ -114,7 +113,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('vnetName')]",
+            "name": "[parameters('vnetName')]",
             "apiVersion": "2015-06-15",
             "properties": {
                 "mode": "Incremental",
@@ -124,7 +123,7 @@
                 },
                 "parameters": {
                     "vnetName": {
-                        "value": "[variables('vnetName')]"
+                        "value": "[parameters('vnetName')]"
                     },
                     "zookeeperNetName": {
                         "value": "[parameters('zookeeperNetName')]"
