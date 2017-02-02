@@ -23,11 +23,14 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "ipName": "[concat(parameters('clusterName'), '-ip')]",
+        "ipId": "[resourceId('Microsoft.Network/publicIPAddresses/', variables('ipName'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(parameters('clusterName'), '-ip')]",
+            "name": "[variables('ipName')]",
             "apiVersion": "2016-03-30",
             "location": "[resourceGroup().location]",
             "properties": {
@@ -51,7 +54,7 @@
                         "name": "loadBalancerFrontEnd",
                         "properties": {
                             "publicIPAddress": {
-                                "id": "[parameters('ipId')]"
+                                "id": "[variables('ipId')]"
                             }
                         }
                     }
@@ -203,7 +206,10 @@
                         }
                     }
                 ]
-            }
+            },
+            "dependsOn": [
+                "[variables('ipId')]"
+            ]
         }
     ]
 }
