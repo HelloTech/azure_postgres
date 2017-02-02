@@ -34,8 +34,8 @@
             "type": "string",
             "defaultValue": "yes",
             "allowedValues": [
-                "yes",
-                "no"
+                "internal",
+                "external"
             ],
             "metadata": {
                 "description": "Would you like to create an internal or external load balancer?"
@@ -95,8 +95,8 @@
             "no": "empty-resources.json"
         },
         "lbFile": {
-            "yes": "external-lb.json",
-            "no": "internal-lb.json"
+            "external": "external-lb.json",
+            "internal": "internal-lb.json"
         },
         "lbId": "[resourceId('Microsoft.Network/loadBalancers/', variables('lbName'))]",
         "vnetGroup": "testht",
@@ -118,7 +118,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('sharedTemplateFileName'), variables('vnetFile')[parameters('newVnet')])]",
+                    "uri": "[concat(variables('nestedTemplates'), variables('vnetFile')[parameters('newVnet')])]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -270,7 +270,7 @@
                 "typeHandlerVersion": "1.2",
                 "settings": {
                     "fileUris": [
-                        "concat(variables('sharedTemplateFileName'), '/zookeeper_startup.sh'"
+                        "concat(variables('nestedTemplates'), '/zookeeper_startup.sh'"
                     ],
                     "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]"
                 }
@@ -398,8 +398,8 @@
                 "typeHandlerVersion": "1.2",
                 "settings": {
                     "fileUris": [
-                        "concat(variables('sharedTemplateFileName'), '/autopart.sh'",
-                        "concat(variables('sharedTemplateFileName'), '/postgres_startup.sh'"
+                        "concat(variables('nestedTemplates'), '/autopart.sh'",
+                        "concat(variables('nestedTemplates'), '/postgres_startup.sh'"
                     ],
                     "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]"
                 }
@@ -415,7 +415,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('sharedTemplateFileName'), variables('lbFile')[parameters('lbType')])]",
+                    "uri": "[concat(variables('nestedTemplates'), variables('lbFile')[parameters('lbType')])]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
