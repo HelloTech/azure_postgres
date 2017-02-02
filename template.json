@@ -427,6 +427,9 @@
                     "lbId": {
                         "value": "[variables('lbId')]"
                     },
+                    "vnetId": {
+                        "value": "[variables('vnetId')]"
+                    },
                     "zookeeperNetName": {
                         "value": "[parameters('zookeeperNetName')]"
                     }
