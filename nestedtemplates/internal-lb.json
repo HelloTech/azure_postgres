@@ -18,7 +18,7 @@
             "type": "String",
             "defaultValue": ""
         },
-        "zookeeperNetName": {
+        "postgresNetName": {
             "defaultValue": "",
             "type": "String"
         }
@@ -41,7 +41,7 @@
                             "privateIPAddress": "10.0.101.4",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[concat(parameters('vnetId'), '/subnets/', parameters('zookeeperNetName'))]"
+                                "id": "[concat(parameters('vnetId'), '/subnets/', parameters('postgresNetName'))]"
                             }
                         }
                     }

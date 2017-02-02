@@ -430,8 +430,8 @@
                     "vnetId": {
                         "value": "[variables('vnetId')]"
                     },
-                    "zookeeperNetName": {
-                        "value": "[parameters('zookeeperNetName')]"
+                    "postgresNetName": {
+                        "value": "[parameters('postgresNetName')]"
                     }
                 }
             },
