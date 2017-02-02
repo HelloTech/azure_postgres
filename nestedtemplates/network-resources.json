@@ -13,19 +13,14 @@
         "postgresNetName": {
             "type": "String",
             "defaultValue": ""
-        },
-        "clusterName": {
-            "type": "String",
-            "defaultValue": ""
         }
     },
     "variables": {
-        "vnetName": "[concat(parameters('clusterName'), '-net')]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('vnetName')]",
+            "name": "[parameters('vnetName')]",
             "apiVersion": "2015-06-15",
             "location": "[resourceGroup().location]",
             "tags": {},

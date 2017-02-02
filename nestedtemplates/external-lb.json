@@ -13,6 +13,10 @@
         "lbId": {
             "type": "String",
             "defaultValue": ""
+        },
+        "vnetId": {
+            "type": "String",
+            "defaultValue": ""
         }
     },
     "variables": {},

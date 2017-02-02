@@ -32,7 +32,7 @@
         },
         "lbType": {
             "type": "string",
-            "defaultValue": "yes",
+            "defaultValue": "internal",
             "allowedValues": [
                 "internal",
                 "external"
@@ -99,7 +99,6 @@
             "internal": "internal-lb.json"
         },
         "lbId": "[resourceId('Microsoft.Network/loadBalancers/', variables('lbName'))]",
-        "vnetGroup": "testht",
         "vnetId": "[resourceId(parameters('vnetGroup'), 'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
         "zookeeperInstanceCount": 3,
         "postgresInstanceCount": "[parameters('instanceCount')]",
@@ -134,6 +133,9 @@
                     },
                     "clusterName": {
                         "value": "[parameters('clusterName')]"
+                    },
+                    "vnetId": {
+                        "value": "[variables('vnetId')]"
                     }
                 }
             }

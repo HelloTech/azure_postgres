@@ -13,6 +13,10 @@
         "lbId": {
             "type": "String",
             "defaultValue": ""
+        },
+        "vnetId": {
+            "type": "String",
+            "defaultValue": ""
         }
     },
     "variables": {},
@@ -33,7 +37,7 @@
                             "privateIPAddress": "10.0.101.4",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[concat(variables('vnetId'), '/subnets/', parameters('zookeeperNetName'))]"
+                                "id": "[concat(parameters('vnetId'), '/subnets/', parameters('zookeeperNetName'))]"
                             }
                         }
                     }
