@@ -94,6 +94,10 @@
             "yes": "network-resources.json",
             "no": "empty-resources.json"
         },
+        "lbFile": {
+            "yes": "external-lb.json",
+            "no": "internal-lb.json"
+        },
         "lbId": "[resourceId('Microsoft.Network/loadBalancers/', variables('lbName'))]",
         "vnetName": "dcos-vnet-F0547AD4",
         "vnetGroup": "testht",
@@ -404,6 +408,29 @@
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', 'postgres', copyIndex())]"
             ]
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[variables('lbName')]",
+            "apiVersion": "2015-06-15",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('sharedTemplateFileName'), variables('lbFile')[parameters('lbType')])]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "clusterName": {
+                        "value": "[parameters('clusterName')]"
+                    },
+                    "lbName": {
+                        "value": "[variables('lbName')]"
+                    },
+                    "lbId": {
+                        "value": "[variables('lbId')]"
+                    }
+                }
+            }
         },
         {
             "type": "Microsoft.Network/loadBalancers",

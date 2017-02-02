@@ -1,0 +1,204 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "String",
+      "defaultValue": ""
+    },
+    "lbName": {
+      "type": "String",
+      "defaultValue": ""
+    },
+    "lbId": {
+      "type": "String",
+      "defaultValue": ""
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[concat(parameters('clusterName'), '-ip')]",
+      "apiVersion": "2016-03-30",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('clusterName')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/loadBalancers",
+      "name": "[parameters('lbName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', 'postgresHaAvailabilitySet')]"
+        },
+        "frontendIPConfigurations": [
+          {
+            "name": "loadBalancerFrontEnd",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[parameters('ipId')]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "loadBalancerBackEnd"
+          }
+        ],
+        "loadBalancingRules": [
+          {
+            "name": "postgresLbRule",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "backendAddressPool": {
+                "id": "[concat(parameters('lbId'), '/backendAddressPools/loadBalancerBackEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 5432,
+              "backendPort": 5000,
+              "probe": {
+                "id": "[concat(parameters('lbId'), '/probes/postgresProbe')]"
+              }
+            }
+          }
+        ],
+        "probes": [
+          {
+            "name": "postgresProbe",
+            "properties": {
+              "protocol": "Tcp",
+              "port": 5000,
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2
+            }
+          }
+        ],
+        "inboundNatRules": [
+          {
+            "name": "postgresSsh0",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10110,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh1",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10111,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh2",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10112,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh3",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10113,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh4",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10114,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh5",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10115,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh6",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10116,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh7",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10117,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh8",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10118,
+              "backendPort": 22
+            }
+          },
+          {
+            "name": "postgresSsh9",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(parameters('lbId'), '/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 10119,
+              "backendPort": 22
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[variables('ipId')]"
+      ]
+    }
+  ]
+}
