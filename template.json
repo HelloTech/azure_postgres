@@ -204,7 +204,6 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
-                "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
         },
@@ -319,7 +318,6 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'vnet')]",
-                "[variables('vnetId')]",
                 "[variables('lbId')]"
             ]
         },
