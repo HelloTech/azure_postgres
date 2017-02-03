@@ -5,7 +5,7 @@
 http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_patroni%2Fmaster%2Ftemplate.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 
-# Azure Patroni Deployment
+# Highly-Available PostgreSQL Cluster (Patroni) on Azure
 
 This one click deployment of a Highly-Available PostgreSQL Cluster on Azure has automated replication, server management and leader election. This project contains a modified deployment version of Haufe's [blog post](http://dev.haufe.com/PostgreSQL-Cluster-Azure/).
 
