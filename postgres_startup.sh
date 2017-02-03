@@ -170,6 +170,7 @@ fi
 echo "  listen: '*:5433'" >> $patroniCfg
 echo "  connect_address: 10.0.101.$(($myIndex + 10)):5433" >> $patroniCfg
 echo "  data_dir: /media/data1/data/postgresql" >> $patroniCfg
+echo "  bin_dir: /usr/lib/postgresql/9.6/bin" >> $patroniCfg
 echo "  pgpass: /tmp/pgpass" >> $patroniCfg
 if [ $myIndex -ne 0 ]
   then
@@ -256,10 +257,20 @@ done
 sudo haproxy -D -f $hacfgFile
 
 # prepare patroni to restart after reboot
-sudo chmod 777 /etc/rc.local
-echo "sudo haproxy -D -f /usr/local/patroni-master/$hacfgFile" > /etc/rc.local
-echo "su -s /bin/bash -c 'export PATH=/usr/lib/postgresql/9.6/bin:\$PATH; /usr/local/patroni-master/patroni.py /usr/local/patroni-master/$patroniCfg >> /usr/local/startup.log' $adminUsername" >> /etc/rc.local
-echo "exit 0" >> /etc/rc.local
+sudo touch /etc/systemd/system/patroni.service
+sudo chmod 777 /etc/systemd/system/patroni.service
+echo "[Unit]" > /etc/systemd/system/patroni.service
+echo "Description=patroni script" >> /etc/systemd/system/patroni.service
+echo "" >> /etc/systemd/system/patroni.service
+echo "[Service]" >> /etc/systemd/system/patroni.service
+echo "User=$adminUsername" >> /etc/systemd/system/patroni.service
+echo "WorkingDirectory=usr/local/patroni-master" >> /etc/systemd/system/patroni.service
+echo "ExecStart=/usr/bin/python /usr/local/patroni-master/patroni.py /usr/local/patroni-master/postgres.yml >> /usr/local/startup.log" >> /etc/systemd/system/patroni.service
+echo "Restart=always" >> /etc/systemd/system/patroni.service
+echo "" >> /etc/systemd/system/patroni.service
+echo "[Install]" >> /etc/systemd/system/patroni.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/patroni.service
+sudo systemctl enable patroni.service
 
 # start patroni
-su -c "export PATH=/usr/lib/postgresql/9.6/bin:$PATH; ./patroni.py $patroniCfg >> /usr/local/startup.log" $adminUsername & echo "spawned"
+sudo systemctl start patroni.service
