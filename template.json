@@ -326,7 +326,8 @@
                     "fileUris": [
                         "[concat(parameters('_artifactsLocation'), '/zookeeper_startup.sh')]"
                     ],
-                    "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]"
+                    "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]",
+                    "Restart": "true"
                 }
             },
             "dependsOn": [
@@ -456,7 +457,8 @@
                         "[concat(parameters('_artifactsLocation'), '/autopart.sh')]",
                         "[concat(parameters('_artifactsLocation'), '/postgres_startup.sh')]"
                     ],
-                    "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]"
+                    "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]",
+                    "Restart": "true"
                 }
             },
             "dependsOn": [
