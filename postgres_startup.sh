@@ -25,6 +25,8 @@ sudo chmod +x ./autopart.sh >> /usr/local/startup.log
 sudo ./autopart.sh >> /usr/local/startup.log
 sudo mkdir /media/data1/data
 sudo chmod 777 /media/data1/data
+echo "/media/data1/data partition created" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # create RAID
 #sudo apt-get --assume-yes -qq install mdadm
@@ -40,6 +42,8 @@ wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key a
 sudo apt-get -qq update
 sudo apt-get -qq -y upgrade
 echo "apt-get update exited with: $?"
+echo "updated packages" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 
 # install python
@@ -73,7 +77,8 @@ sudo pip -q install tzlocal
 echo "pip tzlocal exited with: $?"
 sudo pip -q install python-dateutil
 echo "pip python-dateutil exited with: $?"
-
+echo "installed python" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # install postgres
 # prevent postgres from autostart
@@ -83,6 +88,8 @@ echo "pip python-dateutil exited with: $?"
 sudo apt-get --assume-yes --force-yes -qq install postgresql postgresql-contrib postgresql-server-dev-9.6
 echo "apt-get postgresql postgresql-server-dev-9.6 postgresql-contrib exited with: $?"
 export PATH=/usr/lib/postgresql/9.6/bin:$PATH
+echo "installed postgres" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 #install plv8
 wget https://github.com/plv8/plv8/archive/v2.0.0.tar.gz
@@ -92,6 +99,8 @@ make static
 sudo cp plv8.so /usr/lib/postgresql/9.6/lib/
 sudo cp plv8.control /usr/share/postgresql/9.6/extension/
 sudo cp plv8--2.0.0.sql /usr/share/postgresql/9.6/extension/
+echo "installed plv8" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # download patroni
 sudo apt-get --assume-yes -qq install unzip
@@ -100,6 +109,8 @@ cd /usr/local
 sudo wget -O /usr/local/patroni-master.zip https://github.com/zalando/patroni/archive/master.zip
 sudo unzip patroni-master.zip
 cd patroni-master
+echo "download patroni" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # write configuration
 sudo touch $patroniCfg
@@ -221,6 +232,8 @@ if [ $myIndex -ne 0 ]
     echo "  parameters:" >> $patroniCfg
     echo "    unix_socket_directories: '.'" >> $patroniCfg
 fi
+echo "setup patroni configuration" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 
 # install HA PROXY
@@ -253,9 +266,13 @@ do
   echo "  server Postgres$i 10.0.101.$(($i + 10)):5433 maxconn 100 check port 8008" >> $hacfgFile
   i=$(($i+1))
 done
+echo "installed haproxy" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # start ha as deamon
 sudo haproxy -D -f $hacfgFile
+echo "started haproxy" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # prepare patroni to restart after reboot
 sudo touch /etc/systemd/system/patroni.service
@@ -272,6 +289,10 @@ echo "" >> /etc/systemd/system/patroni.service
 echo "[Install]" >> /etc/systemd/system/patroni.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/patroni.service
 sudo systemctl enable patroni.service
+echo "setup reboot script for patroni" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
 
 # start patroni
 sudo systemctl start patroni.service
+echo "started patroni" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
