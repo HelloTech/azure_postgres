@@ -9,7 +9,7 @@ http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fa
 
 This one click deployment of a Highly-Available PostgreSQL Cluster on Azure has automated replication, server management and leader election. This project contains a modified deployment version of Haufe's [blog post](http://dev.haufe.com/PostgreSQL-Cluster-Azure/).
 
-This Azure template generates two sets of machines both running Ubuntu 16.04 LTS. The first set of three machines are used to run the distributed configuration store [ZooKeeper](https://zookeeper.apache.org/), while the second set is running PostgreSQL 9.6 together with [Patroni](https://github.com/zalando/patroni) providing a high-availability customizable PostgreSQL cluster deployment.
+This Azure template generates two sets of machines both running Ubuntu 16.04 LTS. The first set of three machines are used to run the distributed configuration store [ZooKeeper](https://zookeeper.apache.org/), while the second set is running PostgreSQL 9.6 together with [Patroni](https://github.com/zalando/patroni) providing a high-availability customizable PostgreSQL cluster deployment. This deployment also includes [PL/V8 v.2.0.0](https://github.com/plv8/plv8).
 
 # Parameters
 
