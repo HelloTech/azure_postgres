@@ -1,8 +1,49 @@
-# Azure Patroni Deployment
-
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_patroni%2Fmaster%2Ftemplate.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 <a href="
 http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_patroni%2Fmaster%2Ftemplate.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
+
+# Azure Patroni Deployment
+
+One click deployment of a Highly-Available PostgreSQL Cluster on Azure. With automated replication, server management and leader election. This project contains a modified deployment version of Haufe's [blog post](http://dev.haufe.com/PostgreSQL-Cluster-Azure/).
+
+This azure template generates two sets of machines both running Ubuntu 16.04 LTS. The first set of three machines are used to run the distributed configuration store [ZooKeeper](https://zookeeper.apache.org/), while the second set is running PostgreSQL 9.6 together with [Patroni](https://github.com/zalando/patroni) providing a high-availability customizable PostgreSQL cluster deployment.
+
+# Parameters
+
+This template provides the following parameters, so you can customize your deployment to your needs:
+
+
+* clusterName: What your cluster will be named.
+
+* _artifactsLocation: The repo name from which you are deploying. Default("https://raw.githubusercontent.com/HelloTech/azure_patroni/master")
+
+* newVnet: Whether or not you want to create a new vnet. Default("yes")
+
+* vnetGroup: The resource group in which the vnet is located. If you select yes on newVnet this needs to be set to the resource group in which you are deploying.
+
+* lbType: Whether you want to create an external or internal load balancer. If set to internal the load balancer will only be accessible from inside the virtual network. Default("internal")
+
+* vnetName: If newVnet is set to yet the this will be name of the created vnet otherwise this is the name of already existing vnet to which the deployment will be associated.
+
+* zookeeperNetName: If newVnet is set to yes the this will be name of the created subnet for the zookeeper machines, otherwise this is the name of already existing subnet that will contain the zookeeper vm's.
+
+* postgresNetName: If newVnet is set to yes the this will be name of the created subnet for the postgres machines, otherwise this is the name of already existing subnet that will contain the postgres vm's.
+
+* zookeeperVMSize: The size of zookeeper vms.
+
+* postgresVMSize: The size of the postgres vms.
+
+* postgresDataSize: The size of the ssd used for pg_data for the postgres vms.
+
+* instanceCount: The number of postgres vms.
+
+* adminUsername: The Ubuntu username.
+
+* adminPassword: The Ubuntu password.
+
+# License
+
+Released under the MIT license. See the LICENSE file for more info.
