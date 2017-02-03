@@ -79,9 +79,18 @@ echo "pip python-dateutil exited with: $?"
 #sudo touch /usr/sbin/policy-rc.d
 #sudo chmod 777 /usr/sbin/policy-rc.d
 #echo exit 101 > /usr/sbin/policy-rc.d
-sudo apt-get --assume-yes --force-yes -qq install postgresql postgresql-contrib
-echo "apt-get postgresql postgresql-contrib exited with: $?" 
+sudo apt-get --assume-yes --force-yes -qq install postgresql postgresql-contrib postgresql-server-dev-9.6
+echo "apt-get postgresql postgresql-server-dev-9.6 postgresql-contrib exited with: $?"
 export PATH=/usr/lib/postgresql/9.6/bin:$PATH
+
+#install plv8
+wget https://github.com/plv8/plv8/archive/v2.0.0.tar.gz
+tar -xvzf v2.0.0.tar.gz
+cd plv8-2.0.0
+make static
+sudo cp plv8.so /usr/lib/postgresql/9.6/lib/
+sudo cp plv8.control /usr/share/postgresql/9.6/extension/
+sudo cp plv8--2.0.0.sql /usr/share/postgresql/9.6/extension/
 
 # download patroni
 sudo apt-get --assume-yes -qq install unzip

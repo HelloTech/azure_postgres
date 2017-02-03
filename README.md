@@ -7,9 +7,9 @@ http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fa
 
 # Azure Patroni Deployment
 
-One click deployment of a Highly-Available PostgreSQL Cluster on Azure. With automated replication, server management and leader election. This project contains a modified deployment version of Haufe's [blog post](http://dev.haufe.com/PostgreSQL-Cluster-Azure/).
+This one click deployment of a Highly-Available PostgreSQL Cluster on Azure has automated replication, server management and leader election. This project contains a modified deployment version of Haufe's [blog post](http://dev.haufe.com/PostgreSQL-Cluster-Azure/).
 
-This azure template generates two sets of machines both running Ubuntu 16.04 LTS. The first set of three machines are used to run the distributed configuration store [ZooKeeper](https://zookeeper.apache.org/), while the second set is running PostgreSQL 9.6 together with [Patroni](https://github.com/zalando/patroni) providing a high-availability customizable PostgreSQL cluster deployment.
+This Azure template generates two sets of machines both running Ubuntu 16.04 LTS. The first set of three machines are used to run the distributed configuration store [ZooKeeper](https://zookeeper.apache.org/), while the second set is running PostgreSQL 9.6 together with [Patroni](https://github.com/zalando/patroni) providing a high-availability customizable PostgreSQL cluster deployment.
 
 # Parameters
 
@@ -26,11 +26,11 @@ This template provides the following parameters, so you can customize your deplo
 
 * lbType: Whether you want to create an external or internal load balancer. If set to internal the load balancer will only be accessible from inside the virtual network. Default("internal")
 
-* vnetName: If newVnet is set to yet the this will be name of the created vnet otherwise this is the name of already existing vnet to which the deployment will be associated.
+* vnetName: If newVnet is set to yes, this will be name of the created vnet. Otherwise, this is the name of already existing vnet to which the deployment will be associated.
 
-* zookeeperNetName: If newVnet is set to yes the this will be name of the created subnet for the zookeeper machines, otherwise this is the name of already existing subnet that will contain the zookeeper vm's.
+* zookeeperNetName: If newVnet is set to yes, this will be name of the created subnet for the zookeeper machines, otherwise this is the name of already existing subnet that will contain the zookeeper vm's.
 
-* postgresNetName: If newVnet is set to yes the this will be name of the created subnet for the postgres machines, otherwise this is the name of already existing subnet that will contain the postgres vm's.
+* postgresNetName: If newVnet is set to yes, this will be name of the created subnet for the postgres machines, otherwise this is the name of already existing subnet that will contain the postgres vm's.
 
 * zookeeperVMSize: The size of zookeeper vms.
 
@@ -48,13 +48,13 @@ This template provides the following parameters, so you can customize your deplo
 # Scripts
 
 ### Zookeeper
-The creation of the zookeeper instances is handled by the [zookeeper_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/zookeeper_startup.sh) script. If you would like to make any changes to what is installed on those vm's that's the file you should modify.
+The creation of the zookeeper instances is handled by the [zookeeper_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/zookeeper_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify this file.
 
 ### Mounts
 The mounting of the data ssds is handled by the [autopart.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/autopart.sh) script.
 
 ### Postgres
-The creation of the postgres instances is handles by the [postgres_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/postgres_startup.sh) script. If you would like to make any changes to what is installed on those vm's that's the file you should modify.
+The creation of the postgres instance is handles by the [postgres_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/postgres_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify that script.
 
 # License
 
