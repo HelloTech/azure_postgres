@@ -44,6 +44,18 @@ This template provides the following parameters, so you can customize your deplo
 
 * adminPassword: The Ubuntu password.
 
+
+# Scripts
+
+### Zookeeper
+The creation of the zookeeper instances is handled by the [zookeeper_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/zookeeper_startup.sh) script. If you would like to make any changes to what is installed on those vm's that's the file you should modify.
+
+### Mounts
+The mounting of the data ssds is handled by the [autopart.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/autopart.sh) script.
+
+### Postgres
+The creation of the postgres instances is handles by the [postgres_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/postgres_startup.sh) script. If you would like to make any changes to what is installed on those vm's that's the file you should modify.
+
 # License
 
 Released under the MIT license. See the LICENSE file for more info.
