@@ -56,6 +56,9 @@ The mounting of the data ssds is handled by the [autopart.sh](https://github.com
 ### Postgres
 The creation of the postgres instance is handles by the [postgres_startup.sh](https://github.com/HelloTech/azure_postgres/blob/custom_deploy/postgres_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify that script.
 
+### Notes
+This deployment can take anywhere from 90 to 120 minutes to complete due to long build time for plv8.
+
 # License
 
 Released under the MIT license. See the LICENSE file for more info.
