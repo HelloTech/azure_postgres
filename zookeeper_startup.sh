@@ -1,7 +1,7 @@
 #!/bin/bash
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y jq
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install -y jq
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-x64.tar.gz"
 tar -xvf jdk-7*
 mkdir /usr/lib/jvm
