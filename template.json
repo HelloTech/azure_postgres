@@ -13,7 +13,6 @@
             }
         },
         "vnetGroup": {
-            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "VNET Resource Group."
@@ -60,6 +59,63 @@
             "type": "String",
             "metadata": {
                 "description": "Name you would like to give to postgres' subnet."
+            }
+        },
+        "zookeeperVMSize": {
+            "type": "string",
+            "defaultValue": "Standard_A3 ",
+            "allowedValues": [
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D12_v2",
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS12",
+                "Standard_DS13",
+                "Standard_DS14"
+            ],
+            "metadata": {
+                "description": "Size of the zookeeper vm's"
+            }
+        },
+        "postgresVMSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS12 ",
+            "allowedValues": [
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D12_v2",
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS12",
+                "Standard_DS13",
+                "Standard_DS14"
+            ],
+            "metadata": {
+                "description": "Size of the postgres vm's"
+            }
+        },
+        "postgresDataSize": {
+            "defaultValue": 256,
+            "type": "Int",
+            "metadata": {
+                "description": "Size of the postgres data ssd in GB."
             }
         },
         "instanceCount": {
@@ -215,7 +271,7 @@
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'zookeeperAvailabilitySet')]"
                 },
                 "hardwareProfile": {
-                    "vmSize": "Standard_A2"
+                    "vmSize": "[parameters('zookeeperVMSize')]"
                 },
                 "osProfile": {
                     "computerName": "[concat('zookeeper', copyIndex())]",
@@ -329,7 +385,7 @@
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', 'postgresAvailabilitySet')]"
                 },
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS1"
+                    "vmSize": "[parameters('postgresVMSize')]"
                 },
                 "osProfile": {
                     "computerName": "[concat('postgres', copyIndex())]",
@@ -354,7 +410,7 @@
                     "dataDisks": [
                         {
                             "name": "data0",
-                            "diskSizeGB": "256",
+                            "diskSizeGB": "[parameters('postgresDataSize')]",
                             "lun": 0,
                             "vhd": {
                                 "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountPrefix')[copyIndex()], 'd', variables('storageAccountSuffix')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).primaryEndpoints.blob, 'vhds/', 'data0', copyIndex(), '.vhd')]"
