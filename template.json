@@ -7,7 +7,7 @@
         },
         "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/HelloTech/azure_patroni/master",
+            "defaultValue": "https://raw.githubusercontent.com/HelloTech/azure_postgres/master",
             "metadata": {
                 "description": "Change this value to your repo name if deploying from a fork"
             }

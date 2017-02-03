@@ -1,8 +1,8 @@
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_patroni%2Fmaster%2Ftemplate.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_postgres%2Fmaster%2Ftemplate.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 <a href="
-http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_patroni%2Fmaster%2Ftemplate.json" target="_blank">
+http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fhellotech%2Fazure_postgres%2Fmaster%2Ftemplate.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 
 # Highly-Available PostgreSQL Cluster (Patroni) on Azure
@@ -18,7 +18,7 @@ This template provides the following parameters, so you can customize your deplo
 
 * clusterName: What your cluster will be named.
 
-* _artifactsLocation: The repo name from which you are deploying. Default("https://raw.githubusercontent.com/HelloTech/azure_patroni/master")
+* _artifactsLocation: The repo name from which you are deploying. Default("https://raw.githubusercontent.com/HelloTech/azure_postgres/master")
 
 * newVnet: Whether or not you want to create a new vnet. Default("yes")
 
@@ -48,13 +48,13 @@ This template provides the following parameters, so you can customize your deplo
 # Scripts
 
 ### Zookeeper
-The creation of the zookeeper instances is handled by the [zookeeper_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/zookeeper_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify this file.
+The creation of the zookeeper instances is handled by the [zookeeper_startup.sh](https://github.com/HelloTech/azure_postgres/blob/custom_deploy/zookeeper_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify this file.
 
 ### Mounts
-The mounting of the data ssds is handled by the [autopart.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/autopart.sh) script.
+The mounting of the data ssds is handled by the [autopart.sh](https://github.com/HelloTech/azure_postgres/blob/custom_deploy/autopart.sh) script.
 
 ### Postgres
-The creation of the postgres instance is handles by the [postgres_startup.sh](https://github.com/HelloTech/azure_patroni/blob/custom_deploy/postgres_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify that script.
+The creation of the postgres instance is handles by the [postgres_startup.sh](https://github.com/HelloTech/azure_postgres/blob/custom_deploy/postgres_startup.sh) script. If you would like to make any changes to what is installed on those vm's modify that script.
 
 # License
 
