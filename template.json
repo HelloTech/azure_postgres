@@ -326,7 +326,7 @@
                     "fileUris": [
                         "[concat(parameters('_artifactsLocation'), '/zookeeper_startup.sh')]"
                     ],
-                    "commandToExecute": "[concat('export DEBIAN_FRONTEND=noninteractive sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]"
+                    "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]"
                 }
             },
             "dependsOn": [
