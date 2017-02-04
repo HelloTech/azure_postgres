@@ -334,30 +334,6 @@
             ]
         },
         {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat('zookeeper', copyIndex(), '/zookeeperExtension')]",
-            "apiVersion": "2015-05-01-preview",
-            "location": "[resourceGroup().location]",
-            "copy": {
-                "name": "zookeeperExtLoop",
-                "count": "[variables('zookeeperInstanceCount')]"
-            },
-            "properties": {
-                "publisher": "Microsoft.OSTCExtensions",
-                "type": "OSPatchingForLinux",
-                "typeHandlerVersion": "2.9",
-                "Settings": {
-                    "disabled": false,
-                    "stop": false,
-                    "category": "ImportantAndRecommended",
-                    "oneoff": true
-                }
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', 'zookeeper', copyIndex())]"
-            ]
-        },
-        {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat('postgres', copyIndex(), '-nic')]",
             "apiVersion": "2015-05-01-preview",
@@ -481,30 +457,6 @@
                         "[concat(parameters('_artifactsLocation'), '/postgres_startup.sh')]"
                     ],
                     "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]"
-                }
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', 'postgres', copyIndex())]"
-            ]
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat('postgres', copyIndex(), '/postgresExtension')]",
-            "apiVersion": "2015-05-01-preview",
-            "location": "[resourceGroup().location]",
-            "copy": {
-                "name": "postgresExtLoop",
-                "count": "[variables('postgresInstanceCount')]"
-            },
-            "properties": {
-                "publisher": "Microsoft.OSTCExtensions",
-                "type": "OSPatchingForLinux",
-                "typeHandlerVersion": "2.9",
-                "Settings": {
-                    "disabled": false,
-                    "stop": false,
-                    "category": "ImportantAndRecommended",
-                    "oneoff": true
                 }
             },
             "dependsOn": [
