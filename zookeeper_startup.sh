@@ -1,7 +1,13 @@
 #!/bin/bash
+export DEBIAN_FRONTEND=noninteractive
+sudo touch /usr/local/startup.log
+sudo chmod 666 /usr/local/startup.log
 sudo apt-get --assume-yes -qq update
+echo "ran update" >> /usr/local/startup.log
 sudo apt-get --assume-yes -qq upgrade
+echo "ran upgrade" >> /usr/local/startup.log
 sudo apt-get --assume-yes -qq install jq
+echo "ran install" >> /usr/local/startup.log
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-x64.tar.gz"
 tar -xvf jdk-7*
 mkdir /usr/lib/jvm

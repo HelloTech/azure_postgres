@@ -9,6 +9,7 @@ adminPassword=$6
 hacfgFile=postgresha.cfg
 patroniCfg=postgres.yml
 
+export DEBIAN_FRONTEND=noninteractive
 sudo touch /usr/local/startup.log
 sudo chmod 666 /usr/local/startup.log
 echo "Cluster name: $clusterName" >> /usr/local/startup.log
