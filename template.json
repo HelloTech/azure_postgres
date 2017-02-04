@@ -326,8 +326,31 @@
                     "fileUris": [
                         "[concat(parameters('_artifactsLocation'), '/zookeeper_startup.sh')]"
                     ],
-                    "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]",
-                    "Restart": "true"
+                    "commandToExecute": "[concat('sh zookeeper_startup.sh ', copyIndex(), ' ', variables('zookeeperInstanceCount'))]"
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', 'zookeeper', copyIndex())]"
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat('zookeeper', copyIndex(), '/zookeeperExtension')]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "zookeeperExtLoop",
+                "count": "[variables('zookeeperInstanceCount')]"
+            },
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "OSPatchingForLinux",
+                "typeHandlerVersion": "2.9",
+                "Settings": {
+                    "disabled": false,
+                    "stop": false,
+                    "category": "ImportantAndRecommended",
+                    "oneoff": true
                 }
             },
             "dependsOn": [
@@ -457,8 +480,31 @@
                         "[concat(parameters('_artifactsLocation'), '/autopart.sh')]",
                         "[concat(parameters('_artifactsLocation'), '/postgres_startup.sh')]"
                     ],
-                    "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]",
-                    "Restart": "true"
+                    "commandToExecute": "[concat('sh postgres_startup.sh ', parameters('clusterName'), ' ', variables('zookeeperInstanceCount'), ' ', variables('postgresInstanceCount'), ' ', copyIndex(), ' ', parameters('adminUsername'), ' \"', parameters('adminPassword'), '\" ')]"
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', 'postgres', copyIndex())]"
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat('postgres', copyIndex(), '/postgresExtension')]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "postgresExtLoop",
+                "count": "[variables('postgresInstanceCount')]"
+            },
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "OSPatchingForLinux",
+                "typeHandlerVersion": "2.9",
+                "Settings": {
+                    "disabled": false,
+                    "stop": false,
+                    "category": "ImportantAndRecommended",
+                    "oneoff": true
                 }
             },
             "dependsOn": [
