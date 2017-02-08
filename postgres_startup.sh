@@ -292,6 +292,19 @@ sudo systemctl enable patroni.service
 echo "setup reboot script for patroni" >> /usr/local/startup.log
 echo "" >> /usr/local/startup.log
 
+# prepare haproxy to restart after reboot
+sudo chmod 777 /etc/default/haproxy
+echo "ENABLED=1" >> /etc/default/haproxy
+echo "CONFIG=\"/usr/local/patroni-master/postgresha.cfg\"" >> /etc/default/haproxy
+sudo chmod 644 /etc/default/haproxy
+echo "setup reboot config for haproxy" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
+
+# start haproxy
+sudo haproxy -D -f /usr/local/patroni-master/postgresha.cfg
+echo "started haproxy" >> /usr/local/startup.log
+echo "" >> /usr/local/startup.log
+
 # start patroni
 sudo systemctl start patroni.service
 echo "started patroni" >> /usr/local/startup.log
